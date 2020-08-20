@@ -1,0 +1,7 @@
+nvm.c:58:6:NvmInit	8	static
+nvm.c:79:6:NvmReinit	8	static
+nvm.c:101:10:NvmWrite	8	static
+nvm.c:142:10:NvmErase	8	static
+nvm.c:182:10:NvmVerifyChecksum	8	static
+nvm.c:200:10:NvmGetUserProgBaseAddress	8	static
+nvm.c:215:10:NvmDone	8	static

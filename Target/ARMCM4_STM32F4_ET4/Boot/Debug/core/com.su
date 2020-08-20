@@ -1,0 +1,7 @@
+com.c:61:6:ComInit	8	static
+com.c:100:6:ComTask	16	static
+com.c:150:6:ComFree	0	static
+com.c:166:6:ComTransmitPacket	8	static
+com.c:212:12:ComGetActiveInterfaceMaxRxLen	0	static
+com.c:250:12:ComGetActiveInterfaceMaxTxLen	0	static
+com.c:287:10:ComIsConnected	8	static

@@ -1,0 +1,3 @@
+led.c:51:6:LedBlinkInit	0	static
+led.c:63:6:LedBlinkTask	8	static
+led.c:94:6:LedBlinkExit	0	static

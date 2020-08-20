@@ -1,0 +1,14 @@
+flash.c:744:18:FlashGetSector	16	static
+flash.c:469:17:FlashInitBlock	8	static
+flash.c:621:17:FlashWriteBlock	24	static
+flash.c:498:25:FlashSwitchBlock	16	static
+flash.c:550:17:FlashAddToBlock	24	static
+flash.c:683:17:FlashEraseSectors	40	static
+flash.c:225:6:FlashInit	0	static
+flash.c:238:6:FlashReinit	0	static
+flash.c:256:10:FlashWrite	16	static
+flash.c:294:10:FlashErase	16	static
+flash.c:327:10:FlashWriteChecksum	16	static
+flash.c:395:10:FlashVerifyChecksum	0	static
+flash.c:425:10:FlashDone	8	static
+flash.c:455:10:FlashGetUserProgBaseAddress	0	static
