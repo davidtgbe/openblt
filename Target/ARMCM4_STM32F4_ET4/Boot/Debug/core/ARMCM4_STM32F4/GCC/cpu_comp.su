@@ -1,2 +1,0 @@
-cpu_comp.c:40:6:CpuIrqDisable	0	static,ignoring_inline_asm
-cpu_comp.c:51:6:CpuIrqEnable	0	static,ignoring_inline_asm

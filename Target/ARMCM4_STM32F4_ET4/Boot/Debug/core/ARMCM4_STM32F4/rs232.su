@@ -1,5 +1,0 @@
-rs232.c:213:17:Rs232ReceiveByte	0	static
-rs232.c:233:13:Rs232TransmitByte	8	static
-rs232.c:81:6:Rs232Init	40	static
-rs232.c:116:6:Rs232TransmitPacket	16	static
-rs232.c:144:10:Rs232ReceivePacket	16	static

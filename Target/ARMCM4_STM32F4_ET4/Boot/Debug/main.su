@@ -1,5 +1,0 @@
-main.c:99:13:SystemClock_Config	8	static
-main.c:80:13:Init	8	static
-main.c:56:5:main	8	static
-main.c:153:6:HAL_MspInit	72	static
-main.c:241:6:HAL_MspDeInit	8	static

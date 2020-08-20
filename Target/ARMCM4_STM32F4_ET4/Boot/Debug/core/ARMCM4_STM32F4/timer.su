@@ -1,6 +1,0 @@
-timer.c:72:6:TimerReset	0	static
-timer.c:50:6:TimerInit	8	static
-timer.c:84:6:TimerUpdate	0	static
-timer.c:100:12:TimerGet	8	static
-timer.c:120:10:HAL_GetTick	8	static
-timer.c:138:6:SysTick_Handler	0	static

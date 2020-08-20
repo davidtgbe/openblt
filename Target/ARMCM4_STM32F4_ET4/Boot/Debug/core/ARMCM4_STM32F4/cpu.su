@@ -1,4 +1,0 @@
-cpu.c:58:6:CpuInit	8	static
-cpu.c:74:6:CpuStartUserProgram	8	static
-cpu.c:149:6:CpuMemCopy	16	static
-cpu.c:176:6:CpuMemSet	16	static

@@ -1,2 +1,0 @@
-boot.c:40:6:BootInit	8	static
-boot.c:72:6:BootTask	8	static

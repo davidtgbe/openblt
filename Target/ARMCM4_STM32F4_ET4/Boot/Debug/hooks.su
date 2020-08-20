@@ -1,9 +1,0 @@
-hooks.c:134:10:CpuUserProgramStartHook	8	static
-hooks.c:168:6:CopInitHook	8	static
-hooks.c:185:6:CopServiceHook	8	static
-hooks.c:337:10:FileIsFirmwareUpdateRequestedHook	288	static
-hooks.c:370:17:FileGetFirmwareFilenameHook	0	static
-hooks.c:383:6:FileFirmwareUpdateStartedHook	8	static
-hooks.c:404:6:FileFirmwareUpdateCompletedHook	8	static
-hooks.c:440:6:FileFirmwareUpdateErrorHook	8	static
-hooks.c:461:6:FileFirmwareUpdateLogHook	16	static
