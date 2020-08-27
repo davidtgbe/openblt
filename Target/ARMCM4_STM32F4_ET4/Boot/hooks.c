@@ -415,7 +415,7 @@ void FileFirmwareUpdateCompletedHook(void)
    * 100ms.
    */
   timeoutTime = TimerGet() + 100;
-  while (LL_USART_IsActiveFlag_TC(USART6) == 0)
+  while (LL_USART_IsActiveFlag_TC(USART1) == 0)
   {
     /* check for timeout */
     if (TimerGet() > timeoutTime)
@@ -475,11 +475,11 @@ void FileFirmwareUpdateLogHook(blt_char *info_string)
   while(*info_string != '\0')
   {
     /* write byte to transmit holding register */
-    LL_USART_TransmitData8(USART6, *info_string);
+    LL_USART_TransmitData8(USART1, *info_string);
     /* set timeout time to wait for transmit completion. */
     timeoutTime = TimerGet() + 10;
     /* wait for tx holding register to be empty */
-    while (LL_USART_IsActiveFlag_TXE(USART6) == 0)
+    while (LL_USART_IsActiveFlag_TXE(USART1) == 0)
     {
       /* keep the watchdog happy */
       CopService();
