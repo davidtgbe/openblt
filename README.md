@@ -1,3 +1,35 @@
+# OpenBLT for Anet ET4/5 3D printers
+
+I have adapted OpenBLT bootloader to work with the Anet ET4/5 motherboard, along with the ET4/5 marlin project.
+
+## Current status
+
+Working
+- PC-USB firmware installation/updates
+- SD-CARD firmware installation/updates
+- DFU firmware/bootloader installation/updates
+
+## On progress
+
+TFT integration to show BL messages.
+
+## BUILD/INSTALLATION
+
+DISCLAIMER: Not for production use. This is an unfinished project and under development. I am not responsible for what may happen to the motherboard or printer. Use only at your own risk.
+
+As this BL has been intended to be used with the Marlin project of this [repo](https://github.com/davidtgbe/Marlin), you can refer to those instructions to install this bootloader.
+
+## FAQ
+Why is my screen white?
+- Normally, when you see a white screen it usually means BL is active. It could be waiting for an incomming update, performing an update, or simply idle because it has not found in the flash memory a suitable firmware to load.  
+White screen could also mean a lot of things like an broken board, so, try not blaming BL for everything :)
+
+I have the BL installed, but when I flash the firmware with the flasher, screen is white forever.
+- BL will only load the firmware if this firmware has been written by the BL itself. That is so because it adds a checksum at the end of the install/update process. This checksum will not be written if the firmware has been flashed with j-lin/st-link, thus, the BL will not load any firmware and will be active, waiting for an incoming install/update.
+
+I'm an expert, I want to enter into DFU mode to expermient. How can I enter to this mode?
+- You can enter into DFU mode by pressing touch screen while switching on the printer.
+
 # OpenBLT Bootloader
 
 OpenBLT is an open source bootloader for STM32, XMC, HCS12 and other microcontroller targets.
