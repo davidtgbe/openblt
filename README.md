@@ -21,7 +21,7 @@ As this BL has been intended to be used with the Marlin project of this [repo](h
 
 ## FAQ
 Why is my screen white?
-- Normally, when you see a white screen it usually means BL is active. It could be waiting for an incomming update, performing an update, or simply idle because it has not found in the flash memory a suitable firmware to load.  
+- Normally, when you see a white screen it usually means BL is active. It could be waiting for an incomming update, performing an update, in DFU mode (touching screen by accident at boot time), or simply idle because it has not found in the flash memory a suitable firmware to load.  
 White screen could also mean a lot of things like an broken board, so, try not blaming BL for everything :)
 
 I have the BL installed, but when I flash the firmware with the flasher, screen is white forever.

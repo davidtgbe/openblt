@@ -34,6 +34,7 @@
 #include "stm32f4xx.h"                           /* STM32 registers and drivers        */
 #include "stm32f4xx_ll_gpio.h"                   /* STM32 LL GPIO header               */
 #include "stm32f4xx_ll_usart.h"                  /* STM32 LL USART header              */
+#include "utils.h"
 
 
 /****************************************************************************************
@@ -61,7 +62,6 @@ blt_bool BackDoorEntryHook(void)
   /* default implementation always activates the bootloader after a reset */
   //return BLT_TRUE;
 
-  // PB1 is TOUCH IRQ PIN. If screen is touched on reboot, BL will enter in update mode.
   if(!(GPIOB -> IDR & GPIO_PIN_1))
   {
     return BLT_TRUE;
@@ -136,11 +136,14 @@ blt_bool CpuUserProgramStartHook(void)
   /* additional and optional backdoor entry through the pushbutton on the board. to
    * force the bootloader to stay active after reset, keep it pressed during reset.
    */
+
+  // PB1 is TOUCH IRQ PIN. If screen is touched on reboot, BL will enter in update mode.
   if (LL_GPIO_IsInputPinSet(GPIOB, LL_GPIO_PIN_1) == 0)
   {
     /* pushbutton pressed, so do not start the user program and keep the
      * bootloader active instead.
      */
+	JumpToDFU();
     return BLT_FALSE;
   }
 
