@@ -87,6 +87,11 @@ typedef struct
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void          FileInit(void);
 void          FileTask(void);
 blt_bool      FileIsIdle(void);
@@ -96,8 +101,19 @@ tSrecLineType FileSrecGetLineType(const blt_char *line);
 blt_bool      FileSrecVerifyChecksum(const blt_char *line);
 blt_int16s    FileSrecParseLine(const blt_char *line, blt_addr *address, blt_int8u *data);
 
+extern blt_bool        FileIsFirmwareUpdateRequestedHook(void);
+extern const blt_char *FileGetFirmwareFilenameHook(void);
+extern void            FileFirmwareUpdateStartedHook(void);
+extern void            FileFirmwareUpdateCompletedHook(void);
+extern void            FileFirmwareUpdateErrorHook(blt_int8u error_code);
+extern void            FileFirmwareUpdateLogHook(blt_char *info_string);
+
+
 #endif /* BOOT_FILE_SYS_ENABLE > 0 */
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FILE_H */
 /*********************************** end of file.h *************************************/

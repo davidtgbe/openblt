@@ -31,7 +31,7 @@
 ****************************************************************************************/
 #include "boot.h"                                /* bootloader generic header          */
 #include "stm32f4xx.h"                           /* STM32 registers and drivers        */
-
+#include "gui.h"
 
 /****************************************************************************************
 * Macro definitions
@@ -40,15 +40,6 @@
 #define CPU_USER_PROGRAM_STARTADDR_PTR    ((blt_addr)(NvmGetUserProgBaseAddress() + 0x00000004))
 /** \brief Pointer to the user program's vector table. */
 #define CPU_USER_PROGRAM_VECTABLE_OFFSET  ((blt_int32u)NvmGetUserProgBaseAddress())
-
-
-/****************************************************************************************
-* Hook functions
-****************************************************************************************/
-#if (BOOT_CPU_USER_PROGRAM_START_HOOK > 0)
-extern blt_bool CpuUserProgramStartHook(void);
-#endif
-
 
 /************************************************************************************//**
 ** \brief     Initializes the CPU module.
@@ -86,7 +77,9 @@ void CpuStartUserProgram(void)
      */
     ComDeferredInit();
 #endif
-    /* not a valid user program so it cannot be started */
+    /* not a valid user program so it cannot be started
+     * start gui, idle mode */
+    gui.print_bl_mode(idle);
     return;
   }
 #if (BOOT_CPU_USER_PROGRAM_START_HOOK > 0)

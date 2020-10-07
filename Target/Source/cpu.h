@@ -32,12 +32,27 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void CpuInit(void);
 void CpuStartUserProgram(void);
 void CpuMemCopy(blt_addr dest, blt_addr src, blt_int16u len);
 void CpuMemSet(blt_addr dest, blt_int8u value, blt_int16u len);
 void CpuIrqDisable(void);
 void CpuIrqEnable(void);
+
+#if (BOOT_CPU_USER_PROGRAM_START_HOOK > 0)
+
+extern blt_bool CpuUserProgramStartHook(void);
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* CPU_H */

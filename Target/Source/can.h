@@ -32,10 +32,19 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void     CanInit(void);
 void     CanTransmitPacket(blt_int8u *data, blt_int8u len);
 blt_bool CanReceivePacket(blt_int8u *data, blt_int8u *len);
 #endif /* BOOT_COM_CAN_ENABLE > 0 */
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* CAN_H */

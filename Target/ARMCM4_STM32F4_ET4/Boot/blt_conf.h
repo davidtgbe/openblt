@@ -132,12 +132,16 @@
 #define BOOT_FILE_SYS_ENABLE            (1)
 /** \brief Enable/disable logging messages during firmware updates. */
 #define BOOT_FILE_LOGGING_ENABLE        (1)
+/** \brief Enable/disable verbose logging. */
+#define BOOT_FILE_LOGGING_VERBOSE		(0)
 /** \brief Enable/disable a hook function that is called upon detection of an error. */
 #define BOOT_FILE_ERROR_HOOK_ENABLE     (1)   
 /** \brief Enable/disable a hook function that is called at the start of the update. */
 #define BOOT_FILE_STARTED_HOOK_ENABLE   (1)   
 /** \brief Enable/disable a hook function that is called at the end of the update. */
 #define BOOT_FILE_COMPLETED_HOOK_ENABLE (1)   
+/** \brief Enable/disable a hook function that is called when touch screen is pressed at boot. */
+#define BOOT_TOUCH_HOOKS_ENABLE			(1)
 
    
 /****************************************************************************************

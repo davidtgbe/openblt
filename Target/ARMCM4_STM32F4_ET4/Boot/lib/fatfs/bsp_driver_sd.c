@@ -83,6 +83,7 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
    *  PC11    ------> SDIO_D3
    *  PC12    ------> SDIO_CK
    *  PD2     ------> SDIO_CMD
+   *  PD3 	  ------> CD (Card detect)
    */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 |
                         LL_GPIO_PIN_11 | LL_GPIO_PIN_12;
@@ -100,6 +101,47 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate = LL_GPIO_AF_12;
   LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  BSP_SD_ITConfig();
+
+//  GPIO_InitTypeDef GPIO_InitStruct = {0};
+//  if(hsd->Instance==SDIO)
+//  {
+//  /* USER CODE BEGIN SDIO_MspInit 0 */
+//
+//  /* USER CODE END SDIO_MspInit 0 */
+//    /* Peripheral clock enable */
+//    __HAL_RCC_SDIO_CLK_ENABLE();
+//
+//    __HAL_RCC_GPIOC_CLK_ENABLE();
+//    __HAL_RCC_GPIOD_CLK_ENABLE();
+//    /**SDIO GPIO Configuration
+//    PC8     ------> SDIO_D0
+//    PC9     ------> SDIO_D1
+//    PC10     ------> SDIO_D2
+//    PC11     ------> SDIO_D3
+//    PC12     ------> SDIO_CK
+//    PD2     ------> SDIO_CMD
+//    */
+//    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
+//                          |GPIO_PIN_12;
+//    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
+//    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+//
+//    GPIO_InitStruct.Pin = GPIO_PIN_2;
+//    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
+//    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+//
+//  /* USER CODE BEGIN SDIO_MspInit 1 */
+//
+//  /* USER CODE END SDIO_MspInit 1 */
+// }
 }
 
 /**
@@ -155,26 +197,96 @@ uint8_t BSP_SD_Init(void)
 
   return sd_state;
 }
-/* USER CODE BEGIN AfterInitSection */
-/* can be used to modify previous code / undefine following code / add code */
-/* USER CODE END AfterInitSection */
+
+uint8_t BSP_SD_DeInit(void)
+{
+  uint8_t sd_state = MSD_OK;
+
+  hsd.Instance = SDIO;
+
+  /* HAL SD deinitialization */
+  if(HAL_SD_DeInit(&hsd) != HAL_OK)
+  {
+    sd_state = MSD_ERROR;
+  }
+
+//  /* Msp SD deinitialization */
+//  hsd.Instance = SDIO;
+//  BSP_SD_MspDeInit(&hsd, NULL);
+
+  return  sd_state;
+}
 
 /**
   * @brief  Configures Interrupt mode for SD detection pin.
-  * @retval Returns 0 in success otherwise 1. 
+  * @retval Returns MSD_OK
   */
 uint8_t BSP_SD_ITConfig(void)
 {  
   /* TBI: add user code here depending on the hardware configuration used */
-  
-  return (uint8_t)0;
+
+//	  LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
+//
+//	  /* GPIO Ports Clock Enable */
+//	  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOE);
+//	  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOD);
+//
+//	  /**/
+//	  LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTD, LL_SYSCFG_EXTI_LINE3);
+//
+//	  /**/
+//	  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
+//	  EXTI_InitStruct.LineCommand = ENABLE;
+//	  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+//	  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+//	  LL_EXTI_Init(&EXTI_InitStruct);
+//
+//	  /**/
+//	  LL_GPIO_SetPinPull(GPIOD, LL_GPIO_PIN_3, LL_GPIO_PULL_NO);
+//
+//	  /**/
+//	  LL_GPIO_SetPinMode(GPIOD, LL_GPIO_PIN_3, LL_GPIO_MODE_INPUT);
+//
+//	  /* EXTI interrupt init*/
+//	  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+//	  NVIC_EnableIRQ(EXTI3_IRQn);
+
+
+//---------
+
+//	  GPIO_InitTypeDef GPIO_InitStruct = {0};
+//	  GPIO_InitStruct.Pin = GPIO_PIN_3;
+//	  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+//	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+//
+//	  /* EXTI interrupt init*/
+//	  HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
+//	  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
+//---------
+
+//	GPIO_InitTypeDef gpio_init_structure;
+//
+//	/* Configure Interrupt mode for SD detection pin */
+//	gpio_init_structure.Pin = SD_DETECT_PIN;
+//	gpio_init_structure.Pull = GPIO_PULLUP;
+//	gpio_init_structure.Speed = GPIO_SPEED_FAST;
+//	gpio_init_structure.Mode = GPIO_MODE_IT_RISING_FALLING;
+//	HAL_GPIO_Init(SD_DETECT_GPIO_PORT, &gpio_init_structure);
+//
+//	/* Enable and set SD detect EXTI Interrupt to the lowest priority */
+//	HAL_NVIC_SetPriority((IRQn_Type)(SD_DETECT_EXTI_IRQn), 0x0F, 0x00);
+//	HAL_NVIC_EnableIRQ((IRQn_Type)(SD_DETECT_EXTI_IRQn));
+
+	return MSD_OK;
 }
 
 /** @brief  SD detect IT treatment
   */
 void BSP_SD_DetectIT(void)
 {
-  /* TBI: add user code here depending on the hardware configuration used */
+  LL_GPIO_TogglePin(GPIOD,  LL_GPIO_PIN_12);
 }
 
 /** @brief  SD detect IT detection callback
@@ -417,13 +529,9 @@ __weak void BSP_SD_ReadCpltCallback(void)
  * @param  None
  * @retval Returns if SD is detected or not
  */
-uint8_t BSP_SD_IsDetected(void)
+__weak uint8_t BSP_SD_IsDetected(void)
 {
   __IO uint8_t status = SD_PRESENT;
-
-  /* USER CODE BEGIN 1 */
-  /* user code can be inserted here */
-  /* USER CODE END 1 */    	
 
   return status;
 }

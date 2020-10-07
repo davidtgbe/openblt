@@ -40,10 +40,18 @@ blt_bool UsbReceivePacket(blt_int8u *data, blt_int8u *len);
 /****************************************************************************************
 * Hook functions
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 extern void UsbEnterLowPowerModeHook(void);
 extern void UsbLeaveLowPowerModeHook(void);
 extern void UsbConnectHook(blt_bool connect);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BOOT_COM_USB_ENABLE > 0 */
 

@@ -38,7 +38,8 @@
 #include "stm32f4xx_ll_utils.h"                  /* STM32 LL UTILS header              */
 #include "stm32f4xx_ll_usart.h"                  /* STM32 LL USART header              */
 #include "stm32f4xx_ll_gpio.h"                   /* STM32 LL GPIO header               */
-
+#include "stm32f4xx_hal.h"
+#include "gui.h"
 
 /****************************************************************************************
 * Function prototypes
@@ -166,6 +167,7 @@ void HAL_MspInit(void)
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOD);
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOE);
 
 #if (BOOT_COM_RS232_ENABLE > 0) || (BOOT_FILE_LOGGING_ENABLE > 0)
   /* UART clock enable. */
@@ -187,7 +189,7 @@ void HAL_MspInit(void)
   LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
   LL_GPIO_SetOutputPin(GPIOD, LL_GPIO_PIN_12);
 
-  /* Configure GPIO pin for (optional) backdoor entry input. */
+  /* Configure GPIO pin for DFU backdoor (touch) */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
@@ -249,6 +251,7 @@ void HAL_MspDeInit(void)
   LL_GPIO_DeInit(GPIOB);
   LL_GPIO_DeInit(GPIOC);
   LL_GPIO_DeInit(GPIOD);
+  LL_GPIO_DeInit(GPIOE);
 
 #if (BOOT_COM_CAN_ENABLE > 0)
   /* CAN clock disable. */

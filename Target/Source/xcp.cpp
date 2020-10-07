@@ -30,7 +30,7 @@
 * Include files
 ****************************************************************************************/
 #include "boot.h"                                /* bootloader generic header          */
-
+#include "gui.h"
 
 #if (BOOT_COM_ENABLE > 0)
 /****************************************************************************************
@@ -217,6 +217,7 @@ void XcpPacketReceived(blt_int8u *data, blt_int8u len)
   /* was this a connect command? */
   if (data[0] == XCP_CMD_CONNECT)
   {
+	gui.print_bl_mode(usb_updating);
     /* process the connect command */
     XcpCmdConnect(data);
   }
@@ -1392,9 +1393,13 @@ static void XcpCmdProgramReset(blt_int8u *data)
 #endif
 
   /* reset the ecu after programming is done. so basically, just start the newly programmed
-   * firmware. it is okay if the code does not return here. 
+   * firmware. it is okay if the code does not return here. Avoid starting firmware if it has
+   * not been flashed yet (mta = 0).
    */
-  CpuStartUserProgram();
+
+  if(xcpInfo.mta > 0) {
+	  CpuStartUserProgram();
+  }
 
   /* set packet id to command response packet */
   xcpInfo.ctoData[0] = XCP_PID_RES;

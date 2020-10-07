@@ -61,6 +61,9 @@ void BootInit(void)
 #endif
   /* initialize the backdoor entry */
   BackDoorInit();
+  /* initialize touch hooks */
+  TouchInit();
+
 } /*** end of BootInit ***/
 
 

@@ -29,12 +29,14 @@
 /****************************************************************************************
 * Include files
 ****************************************************************************************/
+#include <string.h>
 #include "boot.h"                                /* bootloader generic header          */
 #include "led.h"                                 /* LED driver header                  */
 #include "stm32f4xx.h"                           /* STM32 registers and drivers        */
 #include "stm32f4xx_ll_gpio.h"                   /* STM32 LL GPIO header               */
 #include "stm32f4xx_ll_usart.h"                  /* STM32 LL USART header              */
 #include "utils.h"
+#include "gui.h"
 
 
 /****************************************************************************************
@@ -133,20 +135,6 @@ void UsbLeaveLowPowerModeHook(void)
 ****************************************************************************************/
 blt_bool CpuUserProgramStartHook(void)
 {
-  /* additional and optional backdoor entry through the pushbutton on the board. to
-   * force the bootloader to stay active after reset, keep it pressed during reset.
-   */
-
-  // PB1 is TOUCH IRQ PIN. If screen is touched on reboot, BL will enter in update mode.
-  if (LL_GPIO_IsInputPinSet(GPIOB, LL_GPIO_PIN_1) == 0)
-  {
-    /* pushbutton pressed, so do not start the user program and keep the
-     * bootloader active instead.
-     */
-	JumpToDFU();
-    return BLT_FALSE;
-  }
-
   /* clean up the LED driver */
   LedBlinkExit();
 
@@ -354,6 +342,7 @@ blt_bool FileIsFirmwareUpdateRequestedHook(void)
     if ( (fileInfoObject.fsize > 0) && (!(fileInfoObject.fattrib & AM_DIR)) )
     {
       /* all conditions are met to start a firmware update from local file storage */
+      gui.print_bl_mode(sd_updating);
       return BLT_TRUE;
     }
   }
@@ -409,6 +398,9 @@ void FileFirmwareUpdateCompletedHook(void)
   #if (BOOT_FILE_LOGGING_ENABLE > 0)
   blt_int32u timeoutTime;
 
+  const char* updatedSuffix = ".updated";
+  char newFirmwareFilename[50];
+
   /* close the log file */
   if (logfile.canUse == BLT_TRUE)
   {
@@ -427,8 +419,12 @@ void FileFirmwareUpdateCompletedHook(void)
     }
   }
   #endif
-  /* now delete the firmware file from the disk since the update was successful */
-  f_unlink(firmwareFilename);
+
+  /* now rename the firmware file from the disk since the update was successful */
+  strcpy(newFirmwareFilename, firmwareFilename);
+  strcat(newFirmwareFilename, updatedSuffix);
+  f_rename(firmwareFilename, newFirmwareFilename);
+
 } /*** end of FileFirmwareUpdateCompletedHook ***/
 #endif /* BOOT_FILE_COMPLETED_HOOK_ENABLE > 0 */
 
@@ -464,6 +460,8 @@ void FileFirmwareUpdateErrorHook(blt_int8u error_code)
 void FileFirmwareUpdateLogHook(blt_char *info_string)
 {
   blt_int32u timeoutTime;
+
+  gui.print_update_process(info_string);
 
   /* write the string to the log file */
   if (logfile.canUse == BLT_TRUE)
@@ -559,6 +557,26 @@ blt_int8u XcpVerifyKeyHook(blt_int8u resource, blt_int8u *key, blt_int8u len)
   return 0;
 } /*** end of XcpVerifyKeyHook ***/
 #endif /* BOOT_XCP_SEED_KEY_ENABLE > 0 */
+
+/****************************************************************************************
+*   TOUCH SCREEN HOOK FUNCTIONS
+****************************************************************************************/
+
+#if (BOOT_TOUCH_HOOKS_ENABLE > 0)
+
+void TouchPressedHook(void) {
+  // PB1 is TOUCH IRQ PIN. If screen is touched on reboot, BL will enter in DFU mode.
+  if (LL_GPIO_IsInputPinSet(GPIOB, LL_GPIO_PIN_1) == 0)
+  {
+	/* pushbutton pressed, so do not start the user program and keep the
+	 * bootloader active instead.
+	 */
+	gui.print_bl_mode(dfu);
+	JumpToDFU();
+  }
+}
+
+#endif
 
 
 /*********************************** end of hooks.c ************************************/

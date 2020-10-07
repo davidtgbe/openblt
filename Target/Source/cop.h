@@ -31,9 +31,24 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void CopInit(void);
 void CopService(void);
 
+#if (BOOT_COP_HOOKS_ENABLE > 0)
+
+extern void CopInitHook(void);
+extern void CopServiceHook(void);
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* COP_H */
 /*********************************** end of cop.h **************************************/

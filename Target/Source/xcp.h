@@ -249,11 +249,19 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void     XcpInit(void);
 blt_bool XcpIsConnected(void);
 void     XcpPacketTransmitted(void);
 void     XcpPacketReceived(blt_int8u *data, blt_int8u len);
 
+#ifdef __cplusplus
+}
+#endif
 
 /****************************************************************************************
 * Configuration check

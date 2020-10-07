@@ -31,6 +31,10 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void     NvmInit(void);
 void     NvmReinit(void);
 blt_bool NvmWrite(blt_addr addr, blt_int32u len, blt_int8u *data);
@@ -39,6 +43,9 @@ blt_bool NvmVerifyChecksum(void);
 blt_addr NvmGetUserProgBaseAddress(void);
 blt_bool NvmDone(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 /****************************************************************************************
 * Macro definitions

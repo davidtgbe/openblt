@@ -66,14 +66,22 @@
 #if (ADDON_GATEWAY_MOD_ENABLE > 0)
 #include "gateway.h"                                  /* gateway add-on module         */
 #endif
-
+#include "touch.h"
 
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void BootInit(void);
 void BootTask(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BOOT_H */
 /*********************************** end of boot.h *************************************/

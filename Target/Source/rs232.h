@@ -32,10 +32,19 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void     Rs232Init(void);
 void     Rs232TransmitPacket(blt_int8u *data, blt_int8u len);
 blt_bool Rs232ReceivePacket(blt_int8u *data, blt_int8u *len);
 #endif /* BOOT_COM_RS232_ENABLE > 0 */
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* RS232_H */

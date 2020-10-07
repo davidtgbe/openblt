@@ -73,17 +73,6 @@ static blt_int8u     FileLibHexStringToByte(const blt_char *hexstring);
 
 
 /****************************************************************************************
-* Hook functions
-****************************************************************************************/
-extern blt_bool        FileIsFirmwareUpdateRequestedHook(void);
-extern const blt_char *FileGetFirmwareFilenameHook(void);
-extern void            FileFirmwareUpdateStartedHook(void);
-extern void            FileFirmwareUpdateCompletedHook(void);
-extern void            FileFirmwareUpdateErrorHook(blt_int8u error_code);
-extern void            FileFirmwareUpdateLogHook(blt_char *info_string);
-
-
-/****************************************************************************************
 * Local data declarations
 ****************************************************************************************/
 /** \brief Local variable that holds the internal module state. */
@@ -185,7 +174,7 @@ void FileTask(void)
   /* ------------------------------- idle -------------------------------------------- */
   if (firmwareUpdateState == FIRMWARE_UPDATE_STATE_IDLE)
   {
-    /* currently, nothings need to be done while idling */
+	//FileHandleFirmwareUpdateRequest();
   }
   /* ------------------------------- starting ---------------------------------------- */
   else if (firmwareUpdateState == FIRMWARE_UPDATE_STATE_STARTING)
@@ -383,12 +372,15 @@ void FileTask(void)
           f_close(&fatFsObjects.file);
           return;
         }
-      }
 #if (BOOT_FILE_LOGGING_ENABLE > 0)
-      FileFirmwareUpdateLogHook("OK\n\r");
+        FileFirmwareUpdateLogHook("OK\n\r");
 #endif
+      }
       /* all okay, then go to programming state */
       firmwareUpdateState = FIRMWARE_UPDATE_STATE_PROGRAMMING;
+#if (BOOT_FILE_LOGGING_ENABLE > 0  && BOOT_FILE_LOGGING_VERBOSE == 0)
+      FileFirmwareUpdateLogHook("Programming...");
+#endif
     }
   }
   /* ------------------------------- programming ------------------------------------- */
@@ -434,12 +426,12 @@ void FileTask(void)
     /* only process parsing results if the line contained address/data info */
     if (parse_result > 0)
     {
-#if (BOOT_FILE_LOGGING_ENABLE > 0)
-      FileFirmwareUpdateLogHook("Programming ");
+#if (BOOT_FILE_LOGGING_ENABLE > 0 && BOOT_FILE_LOGGING_VERBOSE > 0)
+      FileFirmwareUpdateLogHook("Programming");
       /* convert size to string  */
       FileLibLongToIntString(parse_result, loggingStr);
       FileFirmwareUpdateLogHook(loggingStr);
-      FileFirmwareUpdateLogHook(" bytes to memory at 0x");
+      FileFirmwareUpdateLogHook("bytes to memory at 0x");
       /* convert address to hex-string  */
       FileLibByteToHexString((blt_int8u)(lineParseObject.address >> 24), &loggingStr[0]);
       FileLibByteToHexString((blt_int8u)(lineParseObject.address >> 16), &loggingStr[2]);
@@ -463,13 +455,16 @@ void FileTask(void)
         f_close(&fatFsObjects.file);
         return;
       }
-#if (BOOT_FILE_LOGGING_ENABLE > 0)
+#if (BOOT_FILE_LOGGING_ENABLE > 0  && BOOT_FILE_LOGGING_VERBOSE > 0)
       FileFirmwareUpdateLogHook("OK\n\r");
 #endif
     }
     /* check if the end of the file was reached */
     if (f_eof(&fatFsObjects.file) > 0)
     {
+#if (BOOT_FILE_LOGGING_ENABLE > 0  && BOOT_FILE_LOGGING_VERBOSE == 0)
+    	FileFirmwareUpdateLogHook("OK\n\r");
+#endif
 #if (BOOT_FILE_LOGGING_ENABLE > 0)
       FileFirmwareUpdateLogHook("Writing program checksum...");
 #endif
@@ -503,7 +498,11 @@ void FileTask(void)
       /* inform application about update completed event via hook function */
       FileFirmwareUpdateCompletedHook();
 #endif
+#if (BOOT_FILE_LOGGING_ENABLE > 0)
+      FileFirmwareUpdateLogHook("Attempting to launch flashed firmware in 3 secs...\n\r");
+#endif
       /* attempt to start the user program now that programming is done */
+      HAL_Delay(3000);
       CpuStartUserProgram();
     }
   }

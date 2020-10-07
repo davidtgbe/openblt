@@ -31,9 +31,18 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void LedBlinkInit(blt_int16u interval_ms);
 void LedBlinkTask(void);
 void LedBlinkExit(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* LED_H */

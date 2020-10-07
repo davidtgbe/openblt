@@ -150,8 +150,8 @@ void BackDoorCheck(void)
     /* check if the backdoor entry time window elapsed */
     if (TimerGet() >= (BOOT_BACKDOOR_ENTRY_TIMEOUT_MS + backdoorExtensionTime + backdoorOpenTime))
     {
-      /* close the backdoor */
-      backdoorOpen = BLT_FALSE;
+      /* Actually, we don't want te backdoor to be closed, and keep checking for updates if not FW is detected */
+      //backdoorOpen = BLT_FALSE;
 #if (BOOT_FILE_SYS_ENABLE > 0)
       /* during the timed backdoor no remote update request was detected. now do one
        * last check to see if a firmware update from locally attached storage is

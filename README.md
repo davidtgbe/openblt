@@ -8,10 +8,7 @@ Working
 - PC-USB firmware installation/updates
 - SD-CARD firmware installation/updates
 - DFU firmware/bootloader installation/updates
-
-## On progress
-
-TFT integration to show BL messages.
+- TFT update process feedback
 
 ## BUILD/INSTALLATION
 
@@ -20,15 +17,9 @@ DISCLAIMER: Not for production use. This is an unfinished project and under deve
 As this BL has been intended to be used with the Marlin project of this [repo](https://github.com/davidtgbe/Marlin), you can refer to those instructions to install this bootloader.
 
 ## FAQ
-Why is my screen white?
-- Usually, when you see a white screen it usually means BL is active. It could be waiting for an incomming update, performing an update, working in DFU mode (touching screen by accident at boot time), or simply idle because it has not found a suitable firmware to load.  
-White screen could also mean a lot of things like an broken board, so, try not blaming BL for everything :)
-
-I have the BL installed, but when I flash the firmware with the flasher, screen remains white forever after restarting the printer.
-- BL will only load the firmware if this firmware has been written by the BL itself. That is so because it adds a checksum to the firmware at the end of the install/update process. This checksum will not be written if the firmware has been flashed with j-lin/st-link, thus, the BL will not load any firmware, and will remain active, waiting for an incoming install/update.
 
 I want to enter into DFU mode to experiment or update BL/FW. How can I enter to this mode?
-- You can enter into DFU mode by pressing touch screen while switching on the printer.
+- You can enter into DFU mode by pressing touch screen while switching on the printer. You need to use this [software](https://www.st.com/en/development-tools/stsw-stm32080.html) to use DFU mode.
 
 # OpenBLT Bootloader
 

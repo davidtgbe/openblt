@@ -34,6 +34,11 @@
 /* declare assertion macro's. ASSERT_CT is for compile time assertions and ASSERT_RT is
  * for runtime assertions.
  */
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #ifdef NDEBUG
 #define ASSERT_CT(cond) ((void)0)
 #define ASSERT_RT(cond) ((void)0)
@@ -56,6 +61,10 @@
 ****************************************************************************************/
 #ifndef NDEBUG
 void AssertFailure(blt_char *file, blt_int32u line);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* ASSERT_H */

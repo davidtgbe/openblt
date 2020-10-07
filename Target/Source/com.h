@@ -128,6 +128,11 @@ typedef enum
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void       ComInit(void);
 #if (BOOT_COM_DEFERRED_INIT_ENABLE == 1)
 void       ComDeferredInit(void);
@@ -140,6 +145,10 @@ void       ComTransmitPacket(blt_int8u *data, blt_int16u len);
 blt_bool   ComIsConnected(void);
 
 #endif /* BOOT_COM_ENABLE > 0 */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* COM_H */
 /*********************************** end of com.h **************************************/

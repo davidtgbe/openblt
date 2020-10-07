@@ -45,7 +45,12 @@ DSTATUS disk_initialize (
 {
   DSTATUS stat = RES_OK;
 
-  if (DiskInitialized == 0)
+  /* Always initialize to deal with removed SD.
+   * Ideally an EXTI would handle this ( BL disables IRQs on cpu.cpp )
+   * Before: (DiskInitialized == 0)
+   */
+    
+  if (1) 
   {
     DiskInitialized = 1;
     stat = SD_initialize(0);

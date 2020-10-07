@@ -31,10 +31,19 @@
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 void       TimerInit(void);
 void       TimerUpdate(void);
 blt_int32u TimerGet(void);
 void       TimerReset(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* TIMER_H */
