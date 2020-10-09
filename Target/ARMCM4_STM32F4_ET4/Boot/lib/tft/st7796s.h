@@ -36,13 +36,13 @@
 #define ST7796S_MADCTL_RGB        0x00
 #define ST7796S_MADCTL_MH         0x04 // Horizontal Refresh Order
 
-#define ST7796S_ORIENTATION_UP    ST7796S_MADCTL_MX | ST7796S_MADCTL_MY // 230x480 ; Cable on the upper side
-#define ST7796S_ORIENTATION_RIGHT ST7796S_MADCTL_MX | ST7796S_MADCTL_MV // 480x230 ; Cable on the right side
-#define ST7796S_ORIENTATION_LEFT  ST7796S_MADCTL_MY | ST7796S_MADCTL_MV // 480x230 ; Cable on the left side
-#define ST7796S_ORIENTATION_DOWN  0                                     // 230x480 ; Cable on the lower side
+#define ST7796S_ORIENTATION_UP    ST7796S_MADCTL_MX | ST7796S_MADCTL_MY // 320x480 ; Cable on the upper side
+#define ST7796S_ORIENTATION_RIGHT ST7796S_MADCTL_MX | ST7796S_MADCTL_MV // 480x320 ; Cable on the right side
+#define ST7796S_ORIENTATION_LEFT  ST7796S_MADCTL_MY | ST7796S_MADCTL_MV // 480x320 ; Cable on the left side
+#define ST7796S_ORIENTATION_DOWN  0                                     // 320x480 ; Cable on the lower side
 
-#define ST7796S_ORIENTATION       ST7789V_ORIENTATION_LEFT
-#define ST7796S_MADCTL_DATA      (ST7796S_ORIENTATION | ST7796S_MADCTL_RGB)
+#define ST7796S_ORIENTATION       ST7796S_MADCTL_MV
+#define ST7796S_MADCTL_DATA      (ST7796S_ORIENTATION | ST7796S_MADCTL_BGR)
 
 #define ST7796S_NOP               0x00 // No Operation
 #define ST7796S_SWRESET           0x01 // Software reset
