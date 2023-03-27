@@ -19,7 +19,7 @@ As this BL has been intended to be used with the Marlin project of this [repo](h
 ## FAQ
 
 I want to enter into DFU mode to experiment or update BL/FW. How can I enter to this mode?
-- You can enter into DFU mode by pressing touch screen while switching on the printer. You need to use this [software](https://www.st.com/en/development-tools/stsw-stm32080.html) to use DFU mode.
+- You can enter into DFU mode by pressing touch screen while switching on the printer. You need to use the [STM32 Flash loader demonstrator](https://www.st.com/en/development-tools/flasher-stm32.html) to use DFU mode.
 
 # OpenBLT Bootloader
 
